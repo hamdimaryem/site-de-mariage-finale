@@ -1,0 +1,31 @@
+ <form>
+        <label>ID:</label>
+        <input type="text" [(ngModel)]="fleurists.id_fleuriste" disabled><br>
+            <input type="text" id="nom" placeholder="Nom" [(ngModel)]="fleurists.nom" required>
+            <select id="lieu" [(ngModel)]="fleurists.localisation" required>
+                <option value="" disabled selected>Choisir le gouvernorat</option>
+                <option value="Ariana">Ariana</option>
+                <option value="Tunis">Tunis</option>
+                <option value="Ben arous">Ben arous</option>
+                <option value="Sfax">Sfax</option>
+                <option value="Nabeul">Nabeul</option>
+                <option value="Sousse">Sousse</option>
+                <option value="Monastir">Monastir</option>
+            </select>
+            <input type="number" id="avis" placeholder="Avis" [(ngModel)]="fleurists.avis" min="0" max="5" step="0.1" required>
+            <input type="number" id="prix"placeholder="Prix Moyen" [(ngModel)]="fleurists.prix" required>
+            <input type="email" id="mail" placeholder="Email" [(ngModel)]="fleurists.mail">
+            <input type="tel" id="num_tel" placeholder="Numéro de Téléphone" [(ngModel)]="fleurists.num_tel" pattern="^[0-9]{8}$" maxlength="8" required>
+    
+            
+            <select id="lieu" [(ngModel)]="fleurists.services" name="services" required>
+                <option value="" disabled selected>Choisir le service </option>
+                <option value="decoration">decoration</option>
+                <option value="fleur">fleur marièe/option>
+                
+                
+              </select>
+        <!-- Boutons de soumission et d'annulation -->
+        <button type="submit" (click)="modifierFleuriste()">Modifier</button>
+        <button type="button" (click)="annuler()">Annuler</button>
+    </form>

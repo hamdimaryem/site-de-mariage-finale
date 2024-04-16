@@ -1,0 +1,37 @@
+<h1>HELLO admin</h1>
+    <p>tu as l'accès pour ajouter, modifier, supprimer</p>
+    <a [routerLink]="'/ajout-fleuriste'">
+        <button class="btn btn-primary">ajouter Nouveau Fleurist</button><br>
+    </a>
+
+    <table border="1">
+        <tr>
+            <th>IMAGE</th>
+            <th>id fleuriste</th>
+            <th>nom fleuriste</th>
+            <th>mail fleuriste</th>
+            <th>num_tel fleuriste</th>
+            <th>avis fleuriste</th>
+            <th>lieu fleuriste</th>
+            <th>prix moyen fleuriste</th>
+            <th>service</th>
+            <th>modifier/supprimer</th>
+        </tr>
+        <tr *ngFor="let f of fleurists">
+            <td> </td>
+            <td>{{f.id_fleuriste}}</td>
+            <td>{{f.nom}}</td>
+            <td>{{f.mail}}</td>
+            <td>{{f.num_tel}}</td>
+            <td>{{f.avis}}</td>
+            <td>{{f.localisation}}</td>
+            <td>{{f.prix}}</td>
+            <td>{{f.service}}</td>
+            <td>
+                <button (click)="supprimeFleurist(f.id_fleuriste)">supprimer</button><br>
+                <a [routerLink]="'/modifier-fleurist'">
+                    <button class="btn btn-danger">modifier</button><br>
+                </a>
+            </td>
+        </tr>
+    </table>
