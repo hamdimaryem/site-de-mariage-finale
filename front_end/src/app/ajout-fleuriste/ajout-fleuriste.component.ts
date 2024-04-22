@@ -22,6 +22,7 @@ interface FleuristObjet {
   styleUrls: ['./ajout-fleuriste.component.css'],
   imports:[FormsModule,CommonModule],
   standalone:true
+  
 })
 export class AjoutFleuristeComponent implements OnInit {
 

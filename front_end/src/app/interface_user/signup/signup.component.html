@@ -1,0 +1,151 @@
+    <style>
+      .container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          text-align: center;
+      }
+    
+
+      .form_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-image: url('https://media.istockphoto.com/id/1330963152/fr/vectoriel/abstrait-rose-blush-fond-aquarelle-liquide-avec-des-lignes-dor%C3%A9es-des-points-et-des.jpg?s=612x612&w=0&k=20&c=YcwkRhUQakEi_UNuylM7JWHdVTMt60ePHHaotuZAnQk='); /* Remplacez avec le chemin correct de votre image */
+  background-size: cover; /* Pour ajuster l'image de fond */
+  background-position: center; /* Pour centrer l'image */
+  border: 2px solid #264143;
+  border-radius: 20px;
+  box-shadow: 3px 4px 0px 1px #E99F4C;
+  position: relative; /* Pour positionner l'image par rapport à ce conteneur */
+}
+
+
+      .title {
+          color: #264143;
+          font-weight: 900;
+          font-size: 1.5em;
+          margin-top: 20px;
+      }
+
+      .sub_title {
+          font-weight: 600;
+          margin: 5px 0;
+      }
+
+      .form_group {
+          display: grid;
+          grid-template-columns: 1fr 1fr; /* Diviser en deux colonnes égales */
+          grid-column-gap: 20px; /* Espacement entre les colonnes */
+          margin: 10px;
+      }
+
+      .form_style {
+          outline: none;
+          border: 2px solid #264143;
+          box-shadow: 3px 4px 0px 1px #E99F4C;
+          width: 290px;
+          padding: 12px 10px;
+          border-radius: 4px;
+          font-size: 15px;
+      }
+
+      .form_style:focus, .btn:focus {
+          transform: translateY(4px);
+          box-shadow: 1px 2px 0px 0px #E99F4C;
+      }
+
+      .btn {
+          padding: 15px;
+          margin: 25px 0px;
+          width: 290px;
+          font-size: 15px;
+          background: #a1cca6;
+          border-radius: 10px;
+          font-weight: 800;
+          box-shadow: 3px 3px 0px 0px #E99F4C;
+      }
+
+      .btn:hover {
+          opacity: .9;
+      }
+
+      .link {
+          font-weight: 800;
+          color: #264143;
+          padding: 5px;
+      }
+
+      .form_image {
+    position: absolute; /* Position absolue pour positionner l'image */
+    left: 5%; /* Ajustez la position horizontale selon vos besoins */
+    top: 5%; /* Ajustez la position verticale selon vos besoins */
+    width: 30%; /* Largeur de l'image en pourcentage */
+    height: auto; /* Hauteur automatique pour maintenir le rapport hauteur-largeur */
+    max-width: 200px; /* Largeur maximale de l'image */
+    border-radius: 50%; /* Forme circulaire */
+}
+
+.form_image_right {
+    position: absolute;
+    right: 5%; /* Ajustez la position horizontale selon vos besoins */
+    bottom: 5%; /* Ajustez la position verticale selon vos besoins */
+    width: 20%; /* Largeur de l'image en pourcentage */
+    height: auto; /* Hauteur automatique pour maintenir le rapport hauteur-largeur */
+    max-width: 150px; /* Largeur maximale de l'image */
+    border-radius: 50%;
+}
+    </style>
+
+    <div class="container-fluid ">
+        <div class="form_area">
+            <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image">
+            <img src="https://img.freepik.com/vecteurs-premium/deux-colombes-volant-bagues-mariage-illustration-vectorielle_953063-607.jpg" alt="Image" class="form_image_right">  <!-- Image à gauche du formulaire -->
+            <h1 class="title">Bienvenue chez 'Dis-Moi Oui' !</h1>
+            <p  class="title">connecter</p>
+            <form (ngSubmit)="createuser()">
+                <div class="form_group">
+                    <label class="sub_title" for="nom_marie">NOM</label>
+                    <input placeholder="Donner votre nom" class="form_style" type="text" [(ngModel)]="user.nom_marie" id="nom_marie" name="nom_marie" required>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="mail">EMAIL</label>
+                    <input placeholder="donner votre adress mail" id="mail" class="form_style" type="email" name="mail" required [(ngModel)]="user.mail">
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="mot_passe">MOT DE PASSE</label>
+                    <input placeholder="Donner votre mots de passe" id="mot_passe" class="form_style" type="password"required [(ngModel)]="user.mot_passe" name="mots_passe" >
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="date_mariage">DATE DE MARIAGE</label>
+                    <input placeholder="donner votre date de mariage " id="date_mariage" class="form_style" type="date" required [(ngModel)]="user.date_mariage" name="date_mariage">
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="budget">BUDGET ESTIME</label>
+                    <input placeholder="budget estime pour  votre maraige " id="budget" class="form_style" type="number" required [(ngModel)]="user.budget" name="budget">
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="nbr_invite">NOMBRE DES INVITES</label>
+                    <input placeholder="donner nombre de vos INVITES" id="nbr_invite" class="form_style" type="number" required [(ngModel)]="user.nbr_invite" name="nbr_invite">
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="ville">VILLE</label>
+                    <select class="form_style" id="ville" name="ville" [(ngModel)]="user.ville" name="ville" required>
+                        <option value="tunis">TUNIS</option>
+                        <option value="sfax">SFAX</option>
+                        <option value="nabeul">NABEUL</option>
+                        <!-- Ajoutez ici d'autres options pour les villes -->
+                    </select>
+                </div>
+                <div>
+                    <button type="submit" class="btn">s'inscrire</button>
+                    <button type="reset" class="btn">ANNULER</button>
+                    
+                </div><a class="link" href="">
+            
+        </a></form></div><a class="link" href="">
+    </a></div>
+
+

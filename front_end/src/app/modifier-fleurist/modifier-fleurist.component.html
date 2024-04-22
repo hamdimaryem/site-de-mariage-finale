@@ -1,31 +1,168 @@
- <form>
-        <label>ID:</label>
-        <input type="text" [(ngModel)]="fleurists.id_fleuriste" disabled><br>
-            <input type="text" id="nom" placeholder="Nom" [(ngModel)]="fleurists.nom" required>
-            <select id="lieu" [(ngModel)]="fleurists.localisation" required>
-                <option value="" disabled selected>Choisir le gouvernorat</option>
-                <option value="Ariana">Ariana</option>
-                <option value="Tunis">Tunis</option>
-                <option value="Ben arous">Ben arous</option>
-                <option value="Sfax">Sfax</option>
-                <option value="Nabeul">Nabeul</option>
-                <option value="Sousse">Sousse</option>
-                <option value="Monastir">Monastir</option>
-            </select>
-            <input type="number" id="avis" placeholder="Avis" [(ngModel)]="fleurists.avis" min="0" max="5" step="0.1" required>
-            <input type="number" id="prix"placeholder="Prix Moyen" [(ngModel)]="fleurists.prix" required>
-            <input type="email" id="mail" placeholder="Email" [(ngModel)]="fleurists.mail">
-            <input type="tel" id="num_tel" placeholder="Numéro de Téléphone" [(ngModel)]="fleurists.num_tel" pattern="^[0-9]{8}$" maxlength="8" required>
-    
-            
-            <select id="lieu" [(ngModel)]="fleurists.services" name="services" required>
-                <option value="" disabled selected>Choisir le service </option>
-                <option value="decoration">decoration</option>
-                <option value="fleur">fleur marièe/option>
-                
-                
-              </select>
-        <!-- Boutons de soumission et d'annulation -->
-        <button type="submit" (click)="modifierFleuriste()">Modifier</button>
-        <button type="button" (click)="annuler()">Annuler</button>
-    </form>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Fleuriste</title>
+    <style>
+      /* Appliqué depuis le formulaire d'ajout */
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .form_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230713/pngtree-elegant-vintage-flower-frame-a-closeup-wedding-background-in-luxurious-pastel-image_3854722.jpg'); /* Remplacez par le chemin de votre image */
+    background-size: cover; /* Pour que l'image couvre toute la zone */
+    background-position: center; /* Centrer l'image */
+    border: 2px solid #264143;
+    border-radius: 20px;
+    box-shadow: 3px 4px 0px 1px #E99F4C;
+    position: relative;
+}
+
+      .title {
+        color: #264143;
+        font-weight: 900;
+        font-size: 1.5em;
+        margin-top: 20px;
+      }
+
+      .sub_title {
+        font-weight: 600;
+        margin: 5px 0;
+      }
+
+      .form_group {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Diviser en deux colonnes égales */
+        grid-column-gap: 20px; /* Espacement entre les colonnes */
+        margin: 10px;
+      }
+
+      .form_style {
+        outline: none;
+        border: 2px solid #264143;
+        box-shadow: 3px 4px 0px 1px #E99F4C;
+        width: 290px;
+        padding: 12px 10px;
+        border-radius: 4px;
+        font-size: 15px;
+      }
+
+      .form_style:focus, .btn:focus {
+        transform: translateY(4px);
+        box-shadow: 1px 2px 0px 0px #E99F4C;
+      }
+
+      .btn {
+        padding: 15px;
+        margin: 25px 0px;
+        width: 290px;
+        font-size: 15px;
+        background: #a1cca6;
+        border-radius: 10px;
+        font-weight: 800;
+        box-shadow: 3px 3px 0px 0px #E99F4C;
+      }
+
+      .btn:hover {
+        opacity: .9;
+      }
+
+      .link {
+        font-weight: 800;
+        color: #264143;
+        padding: 5px;
+      }
+
+      .form_image {
+        position: absolute;
+        left: 5%;
+        top: 15%;
+        max-width: 300px;
+        width: 30%;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      .form_image_right {
+        position: absolute;
+        right: 5%;
+        bottom: 5%;
+        max-width: 150px;
+        width: 20%;
+        height: auto;
+        border-radius: 50%;
+      }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="form_area">
+            <!-- Images du formulaire d'ajout -->
+            <img src="https://us.123rf.com/450wm/topvectors/topvectors1711/topvectors171100467/89394518-mod%C3%A8le-color%C3%A9-de-fleuriste-vert-et-rose-%C3%A9tiquette-ou-badge-de-style-vintage-pour-boutique-florale.jpg?ver=6" alt="Image" class="form_image">
+            <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image_right"> 
+
+            <h1 class="title">Bienvenue chez 'Dis-Moi Oui' !</h1>
+            <p class="title">MODIFIER FLEURISTE</p>
+            <form (ngSubmit)="modifierFleuriste()">
+                <div class="form_group">
+                    <label class="sub_title" for="id"></label>
+                    <input type="text" id="id" placeholder="ID" class="form_style" [(ngModel)]="fleurists.id_fleuriste" disabled>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="nom">Nom</label>
+                    <input type="text" id="nom" placeholder="Nom" class="form_style" [(ngModel)]="fleurists.nom" required>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="lieu">Localisation</label>
+                    <select id="lieu" class="form_style" [(ngModel)]="fleurists.localisation" required>
+                        <option value="" disabled selected>Choisir le gouvernorat</option>
+                        <option value="Ariana">Ariana</option>
+                        <option value="Tunis">Tunis</option>
+                        <option value="Ben arous">Ben arous</option>
+                        <option value="Sfax">Sfax</option>
+                        <option value="Nabeul">Nabeul</option>
+                        <option value="Sousse">Sousse</option>
+                        <option value="Monastir">Monastir</option>
+                    </select>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="avis">Avis</label>
+                    <input type="number" id="avis" placeholder="Avis" class="form_style" [(ngModel)]="fleurists.avis" min="0" max="5" step="0.1" required>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="prix">Prix Moyen</label>
+                    <input type="number" id="prix" placeholder="Prix Moyen" class="form_style" [(ngModel)]="fleurists.prix" required>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="mail">Email</label>
+                    <input type="email" id="mail" placeholder="Email" class="form_style" [(ngModel)]="fleurists.mail">
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="num_tel">Numéro de Téléphone</label>
+                    <input type="tel" id="num_tel" placeholder="Numéro de Téléphone" class="form_style" [(ngModel)]="fleurists.num_tel" pattern="^[0-9]{8}$" maxlength="8" required>
+                </div>
+                <div class="form_group">
+                    <label class="sub_title" for="services">Services</label>
+                    <select id="services" class="form_style" [(ngModel)]="fleurists.services" required>
+                        <option value="" disabled selected>Choisir le service</option>
+                        <option value="décoration">Décoration</option>
+                        <option value="fleur de mariée">Fleur de mariée</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Modifier</button>
+                <button type="button" class="btn" (click)="annuler()">Annuler</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

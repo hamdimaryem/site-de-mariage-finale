@@ -1,37 +1,192 @@
-<h1>HELLO admin</h1>
-    <p>tu as l'accès pour ajouter, modifier, supprimer</p>
-    <a [routerLink]="'/ajout-fleuriste'">
-        <button class="btn btn-primary">ajouter Nouveau Fleurist</button><br>
-    </a>
+<style>
+    /* Styles du premier formulaire */
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
 
-    <table border="1">
-        <tr>
-            <th>IMAGE</th>
-            <th>id fleuriste</th>
-            <th>nom fleuriste</th>
-            <th>mail fleuriste</th>
-            <th>num_tel fleuriste</th>
-            <th>avis fleuriste</th>
-            <th>lieu fleuriste</th>
-            <th>prix moyen fleuriste</th>
-            <th>service</th>
-            <th>modifier/supprimer</th>
-        </tr>
-        <tr *ngFor="let f of fleurists">
-            <td> </td>
-            <td>{{f.id_fleuriste}}</td>
-            <td>{{f.nom}}</td>
-            <td>{{f.mail}}</td>
-            <td>{{f.num_tel}}</td>
-            <td>{{f.avis}}</td>
-            <td>{{f.localisation}}</td>
-            <td>{{f.prix}}</td>
-            <td>{{f.service}}</td>
-            <td>
-                <button (click)="supprimeFleurist(f.id_fleuriste)">supprimer</button><br>
-                <a [routerLink]="'/modifier-fleurist'">
-                    <button class="btn btn-danger">modifier</button><br>
-                </a>
-            </td>
-        </tr>
-    </table>
+  
+    .form_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230713/pngtree-elegant-vintage-flower-frame-a-closeup-wedding-background-in-luxurious-pastel-image_3854722.jpg'); /* Remplacez par le chemin de votre image */
+    background-size: cover; /* Pour que l'image couvre toute la zone */
+    background-position: center; /* Centrer l'image */
+    border: 2px solid #264143;
+    border-radius: 20px;
+    box-shadow: 3px 4px 0px 1px #E99F4C;
+    position: relative;
+}
+
+  
+    .title {
+        color: #264143;
+        font-weight: 900;
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
+  
+    .sub_title {
+        font-weight: 600;
+        margin: 5px 0;
+    }
+  
+    .form_group {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Diviser en deux colonnes égales */
+        grid-column-gap: 20px; /* Espacement entre les colonnes */
+        margin: 10px;
+    }
+  
+    .form_style {
+        outline: none;
+        border: 2px solid #264143;
+        box-shadow: 3px 4px 0px 1px #E99F4C;
+        width: 290px;
+        padding: 12px 10px;
+        border-radius: 4px;
+        font-size: 15px;
+    }
+  
+    .form_style:focus, button:focus {
+        transform: translateY(4px);
+        box-shadow: 1px 2px 0px 0px #E99F4C;
+    }
+  
+    button {
+        padding: 15px;
+        margin: 25px 0px;
+        width: 290px;
+        font-size: 15px;
+        background: #a1cca6;
+        border-radius: 10px;
+        font-weight: 800;
+        box-shadow: 3px 3px 0px 0px #E99F4C;
+    }
+  
+    button:hover {
+        opacity: .9;
+    }
+  
+    .link {
+        font-weight: 800;
+        color: #264143;
+        padding: 5px;
+    }
+  
+    /* Styles de l'image */
+    .form_image {
+        position: absolute; /* Position absolue pour positionner l'image */
+        /* Décalage à gauche */
+        left: 20px;
+        top: 20px; /* Décalage en haut */
+        width: 150px; /* Largeur de l'image */
+        height: 150px; /* Hauteur de l'image */
+        border-radius: 50%; /* Forme circulaire */
+    }
+  
+    .form_image_right {
+        position: absolute;
+        right: 20px; /* Décalage à droite */
+        bottom: 20px; /* Décalage vers le bas */
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+  
+    /* Styles du tableau */
+    table {
+        border-collapse: collapse;
+        width: 90%;
+        margin-top: 20px;
+    }
+  
+    th, td {
+        border: 1px solid #264143;
+        padding: 8px;
+        text-align: center;
+    }
+  
+    th {
+        background-color: #EDDCD9;
+        color: #264143;
+    }
+  
+    td {
+        background-color: #ffffff;
+    }
+    .h1 {
+    font-family: 'Lora', serif; /* Police élégante */
+    text-transform: uppercase; /* Majuscules */
+    letter-spacing: 1.5px; /* Espacement entre les lettres */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    color: #2c3e50; /* Couleur sombre */
+}
+.h3 {
+    font-family: 'Roboto', sans-serif; /* Police moderne */
+    font-weight: 400; /* Police normale */
+    letter-spacing: 1px; /* Espacement entre les lettres */
+    color: #95a5a6; /* Gris clair pour contraste */
+    text-transform: uppercase; /* Majuscules */
+    
+}
+.form_image {
+    position: absolute; /* Position absolue pour positionner l'image */
+    left: 5%; /* Ajustez la position horizontale selon vos besoins */
+    top: 1%; /* Ajustez la position verticale selon vos besoins */
+    width: 20%; /* Largeur de l'image en pourcentage */
+    height: auto; /* Hauteur automatique pour maintenir le rapport hauteur-largeur */
+    max-width: 200px; /* Largeur maximale de l'image */
+    border-radius: 50%; /* Forme circulaire */
+}
+  </style>
+  
+  <div class="container-fluid">
+      <div class="form_area">
+        <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image">
+        
+          <h1 class="h1">HELLO admin</h1>
+          <p class="h3">Tu as l acces pour ajouter, modifier, supprimer</p>
+          <a [routerLink]="'/ajout-fleuriste'">
+              <button class="btn btn-primary">Ajouter Nouveau Fleuriste</button><br>
+          </a>
+  
+          <table>
+              <tr>
+                  
+                  <th>Id Fleuriste</th>
+                  <th>Nom Fleuriste</th>
+                  <th>Mail Fleuriste</th>
+                  <th>Numero Telephone Fleuriste</th>
+                  <th>Avis Fleuriste</th>
+                  <th>Lieu Fleuriste</th>
+                  <th>Prix Moyen Fleuriste</th>
+                  <th>Service</th>
+                  <th>Modifier/Supprimer</th>
+              </tr>
+              <tr *ngFor="let f of fleurists">
+                  
+                  <td>{{f.id_fleuriste}}</td>
+                  <td>{{f.nom}}</td>
+                  <td>{{f.mail}}</td>
+                  <td>{{f.num_tel}}</td>
+                  <td>{{f.avis}}</td>
+                  <td>{{f.localisation}}</td>
+                  <td>{{f.prix}}</td>
+                  <td>{{f.service}}</td>
+                  <td>
+                      <button (click)="supprimeFleurist(f.id_fleuriste)">Supprimer</button><br>
+                      <a [routerLink]="'/modifier-fleurist'">
+                          <button class="btn btn-danger">Modifier</button><br>
+                      </a>
+                  </td>
+              </tr>
+          </table>
+      </div>
+  </div>
+  
