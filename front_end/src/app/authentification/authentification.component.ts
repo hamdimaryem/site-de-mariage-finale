@@ -1,31 +1,35 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Router, RouterModule } from '@angular/router';
+import { Router, NavigationEnd, Event, RouterModule } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-interface personneObjet{
-  mail: string ; 
-  password: string ; 
-  role: string ;
 
+
+interface personneObjet {
+  mail: string;
+  password: string;
+  role: string;
 }
+
 @Component({
   selector: 'app-authentification',
-  standalone: true,
   templateUrl: './authentification.component.html',
   styleUrls: ['./authentification.component.css'],
-  imports: [RouterModule,FormsModule]
+  imports :[RouterModule,FormsModule],
+  standalone:true 
 })
 export class AuthentificationComponent {
- personne: personneObjet = {
-  mail: '',
-  password: '',
-  role:''
- };
+  personne: personneObjet = {
+    mail: '',
+    password: '',
+    role: ''
+  };
 
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  login(): void {
+  login() {
     const nouveauPersonne = {
       mail: this.personne.mail,
       password: this.personne.password,
@@ -33,10 +37,12 @@ export class AuthentificationComponent {
 
     this.authService.login(nouveauPersonne).subscribe({
       next: (response) => {
+        console.log(response);
         if (response && response.token) {
-          localStorage.setItem('token', response.token); // Stocker le token dans le local storage
+          localStorage.setItem('token', response.token);
           this.validateTokenAndRedirect(response.token);
         } else {
+          alert("mot de passe ou Email faux");
           console.error('No token found in response');
         }
       },
@@ -45,17 +51,20 @@ export class AuthentificationComponent {
       }
     });
   }
+
   validateTokenAndRedirect(token: string): void {
     this.authService.validateToken(token).subscribe({
       next: (response) => {
         console.log(response);
-        if (response && response.data && response.data.role) { // Vérifiez que la réponse et le rôle sont définis
+        if (response && response.data && response.data.role) {
           const role = response.data.role;
-  
+
           if (role === 'admin') {
-            this.router.navigate(['/HomeAdmin/']);
+            alert(" admin login succsufull")
+            this.router.navigate(['/admin_home']);
           } else if (role === 'user') {
-            this.router.navigate(['/homeUser/']);
+            alert(" user  login succsufull")
+            this.router.navigate(['/navbar']);
           } else {
             console.error('Unauthorized role:', role);
           }
@@ -63,14 +72,13 @@ export class AuthentificationComponent {
           console.error('Role not found in response');
         }
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Token validation failed:', error);
       }
     });
   }
 
   goToSignup(): void {
-    this.router.navigate(['/signup/']); // Redirige vers la page d'inscription
+    this.router.navigate(['/signup']);
   }
 }
-

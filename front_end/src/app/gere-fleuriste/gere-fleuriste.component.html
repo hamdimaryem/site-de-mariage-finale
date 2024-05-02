@@ -1,5 +1,5 @@
 <style>
-    /* Styles du premier formulaire */
+  
     .container {
         display: flex;
         align-items: center;
@@ -14,7 +14,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230713/pngtree-elegant-vintage-flower-frame-a-closeup-wedding-background-in-luxurious-pastel-image_3854722.jpg'); /* Remplacez par le chemin de votre image */
+    background-image: url('https://media.istockphoto.com/id/1330963152/fr/vectoriel/abstrait-rose-blush-fond-aquarelle-liquide-avec-des-lignes-dor%C3%A9es-des-points-et-des.jpg?s=612x612&w=0&k=20&c=YcwkRhUQakEi_UNuylM7JWHdVTMt60ePHHaotuZAnQk='); /* Remplacez par le chemin de votre image */
     background-size: cover; /* Pour que l'image couvre toute la zone */
     background-position: center; /* Centrer l'image */
     border: 2px solid #264143;
@@ -148,7 +148,7 @@
   
   <div class="container-fluid">
       <div class="form_area">
-        <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image">
+        <img src="https://www.evenementielpourtous.com//upload/76813_1_big_123497.jpg" alt="Image" class="form_image">
         
           <h1 class="h1">HELLO admin</h1>
           <p class="h3">Tu as l acces pour ajouter, modifier, supprimer</p>
@@ -180,10 +180,11 @@
                   <td>{{f.prix}}</td>
                   <td>{{f.service}}</td>
                   <td>
-                      <button (click)="supprimeFleurist(f.id_fleuriste)">Supprimer</button><br>
-                      <a [routerLink]="'/modifier-fleurist'">
-                          <button class="btn btn-danger">Modifier</button><br>
+                    <button class="button" (click)="supprimeFleurist(f.id_fleuriste)">supprimer</button><br>
+                    <a [routerLink]="['/modifier-fleuriste']" [queryParams]="{ fleuristeId: f.id_fleuriste }">
+                        <button class="btn btn-warning">Modifier</button>
                       </a>
+                      
                   </td>
               </tr>
           </table>

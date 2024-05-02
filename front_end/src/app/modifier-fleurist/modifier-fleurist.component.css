@@ -2,10 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-image: url("/modif.jpg");
+    background-image: url("https://media.istockphoto.com/id/1330963152/fr/vectoriel/abstrait-rose-blush-fond-aquarelle-liquide-avec-des-lignes-dor%C3%A9es-des-points-et-des.jpg?s=612x612&w=0&k=20&c=YcwkRhUQakEi_UNuylM7JWHdVTMt60ePHHaotuZAnQk=");
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 23 avr. 2024 à 00:17
+-- Généré le : mar. 23 avr. 2024 à 02:05
 -- Version du serveur :  10.4.14-MariaDB
 -- Version de PHP : 7.4.10
 
@@ -24,48 +24,45 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `personne`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(11) NOT NULL,
-  `nom_marie` varchar(200) NOT NULL,
-  `mail` varchar(200) NOT NULL,
-  `date_mariage` date NOT NULL,
-  `nbr_invite` int(11) NOT NULL,
-  `mot_passe` varchar(11) NOT NULL,
-  `budget` float NOT NULL,
-  `ville` varchar(200) NOT NULL
+CREATE TABLE `personne` (
+  `id_personne` int(11) NOT NULL,
+  `nom` varchar(200) NOT NULL,
+  `prenom` varchar(200) NOT NULL,
+  `mail` varchar(500) NOT NULL,
+  `role` varchar(200) NOT NULL,
+  `password` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `user`
+-- Déchargement des données de la table `personne`
 --
 
-INSERT INTO `user` (`id_user`, `nom_marie`, `mail`, `date_mariage`, `nbr_invite`, `mot_passe`, `budget`, `ville`) VALUES
-(47, 'Farah Touil', 'farah.touil@gmail.com', '2024-07-19', 100, '1234560', 20000, 'tunis'),
-(49, 'hayet chelly', 'arveanature123@gmail.com', '2024-04-10', 69, 'mariem', 950, 'sfax');
+INSERT INTO `personne` (`id_personne`, `nom`, `prenom`, `mail`, `role`, `password`) VALUES
+(1, 'cherni', 'manel', 'manel@gmail.com', 'user', 'mimi123'),
+(2, 'Touil', 'Farah', 'farah@gmail.com', 'admin', '1234560');
 
 --
 -- Index pour les tables déchargées
 --
 
 --
--- Index pour la table `user`
+-- Index pour la table `personne`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `mail` (`mail`);
+ALTER TABLE `personne`
+  ADD PRIMARY KEY (`id_personne`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `personne`
 --
-ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+ALTER TABLE `personne`
+  MODIFY `id_personne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

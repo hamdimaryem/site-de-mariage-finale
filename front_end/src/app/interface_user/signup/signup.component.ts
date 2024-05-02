@@ -7,12 +7,12 @@ import { CommonModule } from '@angular/common';
 
 interface userObjet {
   
-  nom_marie: string;
+  nom: string;
   mail: string;
   budget: number;
   nbr_invite: number;
   date_mariage: string;
-  mot_passe: string;
+  password: string;
   ville: string;
 }
 
@@ -25,12 +25,12 @@ interface userObjet {
 })
 export class SignupComponent {
   user: userObjet = {
-    nom_marie: '',
+    nom: '',
      mail: '',
      budget: 0,
      nbr_invite: 0,
      date_mariage: '',
-     mot_passe: '',
+     password: '',
      ville:'',
    };
    userAjoute: boolean = false;
@@ -40,18 +40,38 @@ export class SignupComponent {
    
    }
    createuser(): void {
+    const { nom, mail, budget, nbr_invite, date_mariage, password, ville } = this.user;
+
+    // Vérifiez que tous les champs sont remplis
+    if (!nom || !mail || !budget || !nbr_invite || !date_mariage || !password || !ville) {
+      alert("Tous les champs doivent être remplis.");
+      return; // Arrêtez la fonction si des champs sont vides
+    }
+    // Vérifiez que le mot de passe a au moins 8 caractères, une lettre majuscule et une lettre minuscule
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // Au moins 8 caractères, avec des lettres minuscules et majuscules
+
+    if (!passwordRegex.test(password)) {
+      alert("Le mot de passe doit avoir au moins 8 caractères, incluant des lettres minuscules et majuscules.");
+      return; // Arrêtez la fonction si le mot de passe n'est pas conforme
+    }
+
+
     const nouveauuser = {
-    nom_marie: this.user.nom_marie,
+    nom: this.user.nom,
       mail: this.user.mail,
       budget: this.user.budget,
       nbr_invite: this.user.nbr_invite,
       date_mariage: this.user.date_mariage,
-      mot_passe: this.user.mot_passe,
+      password: this.user.password,
       ville:this.user.ville
+      
     };
+   
 
     this.i.createuser(nouveauuser).subscribe({
-      next: (response) => {
+      next: (_response) => {
+        this.userAjoute=true;
+
         console.log(nouveauuser);
         alert("COMPTE CRÉÉ AVEC SUCCÈS");
       },

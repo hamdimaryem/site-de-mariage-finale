@@ -1,9 +1,4 @@
-# Remove the php extension from the filename
-# Activation du mod rewrite d'Apache 
-RewriteEngine On
 
-
-RewriteRule ^fleurist/([0-9])*   fleurist.php?id=$1 [L]
 
 # Set the headers for the restful api
 Header always set Access-Control-Allow-Origin http://localhost:4200

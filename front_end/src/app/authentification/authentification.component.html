@@ -1,26 +1,128 @@
-<div class="container-fluid">
-  <div class="form_area">
-    <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image">
-    <img src="https://img.freepik.com/vecteurs-premium/deux-colombes-volant-bagues-mariage-illustration-vectorielle_953063-607.jpg" alt="Image" class="form_image_right">  <!-- Image à gauche du formulaire -->
+
+  <style>
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      min-height: 100vh; /* Remplit 100% de la hauteur de l'écran */
+      width: 100%; /* Pour occuper toute la largeur de l'écran */
+    }
+
+    .form_area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-image: url('https://media.istockphoto.com/id/1330963152/fr/vectoriel/abstrait-rose-blush-fond-aquarelle-liquide-avec-des-lignes-dor%C3%A9es-des-points-et-des.jpg?s=612x612&w=0&k=20&c=YcwkRhUQakEi_UNuylM7JWHdVTMt60ePHHaotuZAnQk=');
+      background-size: cover;
+      background-position: center;
+      border: 2px solid #264143;
+      border-radius: 20px;
+      box-shadow: 3px 4px 0px 1px #E99F4C;
+      position: relative;
+      padding: 20px;
+      min-width: 100%;
+      width: 100%;
+    }
+
+    .title {
+      color: #264143;
+      font-weight: 900;
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    .sub_title {
+      font-weight: 600;
+      margin: 5px 0;
+    }
+
+    .form_group {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      width: 100%;
+    }
+
+    @media (min-width: 600px) {
+      .form_group {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form_style {
+      outline: none;
+      border: 2px solid #264143;
+      box-shadow: 3px 4px 0px 1px #E99F4C;
+      padding: 12px 10px;
+      border-radius: 4px;
+      font-size: 15px;
+      width: 100%;
+    }
+
+    .btn {
+      padding: 15px;
+      margin: 25px 0;
+      width: 100%;
+      font-size: 15px;
+      background: #a1cca6;
+      border-radius: 10px;
+      font-weight: 800;
+      box-shadow: 3px 3px 0px 0px #E99F4C;
+    }
+
+    .btn:hover {
+      opacity: .9;
+    }
+
+    .form_image {
+      position: absolute;
+      left: 5%;
+      top: 5%;
+      width: 10vw;
+      height: auto;
+      border-radius: 50%;
+      max-width: 200px;
+    }
+
+    .form_image_right {
+      position: absolute;
+      right: 5%;
+      bottom: 5%;
+      width: 8vw;
+      height: auto;
+      border-radius: 50%;
+      max-width: 150px;
+    }
+  </style>
+
+  <!-- Votre code HTML -->
+  <div class="container container-fluid">
+    <div class="form_area">
+      <img src="https://www.evenementielpourtous.com/images/photo/mini/76813_1_mini_123497.jpg" alt="Image" class="form_image">
+      <img src="https://img.freepik.com/vecteurs-premium/deux-colombes-volant-bagues-mariage-illustration-vectorielle_953063-607.jpg" alt="Image" class="form_image_right">
       <p class="title">LOG IN</p>
       <form action="">
-          <div class="form_group">
-              
-          </div>
-          <div class="form_group">
-              <label class="sub_title" for="email">Email</label>
-              <input placeholder="Enter your email" id="email" class="form_style" type="email">
-          </div>
-          <div class="form_group">
-              <label class="sub_title" for="password">Password</label>
-              <input placeholder="Enter your password" id="password" class="form_style" type="password">
-          </div>
-          <div>
-            <a [routerLink]="'/HomeAdmin'">
-              <button class="btn">LOG IN </button>
-            </a>
-              <p>Have an Account? <a class="link" [routerLink]="'/signup'" >sign up </a></p><a class="link" href="">
-          </a></div><a class="link" href="">
-      
-  </a></form></div>
-</div>
+        <div class="form_group">
+          <label class="sub_title" for="email">Email</label>
+          <input placeholder="Enter your email" id="mail" class="form_style" type="email" [(ngModel)]="personne.mail" name="mail">
+        </div>
+        <div class="form_group">
+          <label class="sub_title" for="password">Password</label>
+          <input placeholder="Enter your password" id="password" class="form_style" type="password" [(ngModel)]="personne.password" name="password">
+        </div>
+        <div>
+          <button class="btn" (click)="login()">SE CONNECTER</button>
+        </div>
+        <h3>Have an Account?</h3>
+        <div>
+          <a [routerLink]="'./signup'">
+            <button class="btn">Sign Up</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+

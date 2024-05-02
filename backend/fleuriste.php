@@ -1,11 +1,14 @@
+
 <?php
 switch($_SERVER['REQUEST_METHOD'])
 {
     case 'GET':
-        if($_GET["id_fleuriste"]==null)
-         getAllFleuriste();
-        else
-            getFleuriste($_GET["id_fleuriste"]);
+            if (!isset($_GET["id_fleuriste"]) || $_GET["id_fleuriste"] == null) {
+                getAllFleuriste();
+            } else {
+                getFleuriste($_GET["id_fleuriste"]);
+            }
+            
         break;
         case 'POST':
             createFleuriste();
@@ -76,16 +79,24 @@ function getFleuriste($id)
 }
 function createFleuriste() {
     require_once("connexion.php"); 
-
+  
     // Récupérer les données du corps de la requête POST
     $donnees = json_decode(file_get_contents('php://input'), true);
-
+  
+    // Vérifier que les données requises ont été fournies
+    if ( !isset($donnees['nom']) || !isset($donnees['mail']) || !isset($donnees['num_tel']) || !isset($donnees['localisation']) || !isset($donnees['avis']) || !isset($donnees['prix']) || !isset($donnees['service'])) {
+      http_response_code(400); 
+      $msg = array("erreur"=> "Tous les champs sont requis"); 
+      echo json_encode($msg);
+      exit();
+    }
+  
     // Écrire le code pour insérer un nouveau fleuriste dans la base de données
     // Utilisez les données récupérées du corps de la requête pour cela
-
-    $requete = "INSERT INTO fleuriste (id_fleuriste, nom, mail, num_tel, localisation, avis, prix, service) VALUES (:id, :nom, :mail, :num_tel, :localisation, :avis, :prix, :service)";
+  
+    $requete = "INSERT INTO fleuriste ( nom, mail, num_tel, localisation, avis, prix, service) VALUES ( :nom, :mail, :num_tel, :localisation, :avis, :prix, :service)";
     $prepared = $connexion->prepare($requete);
-    $prepared->bindParam(':id', $donnees['id_fleuriste']);
+   
     $prepared->bindParam(':nom', $donnees['nom']);
     $prepared->bindParam(':mail', $donnees['mail']);
     $prepared->bindParam(':num_tel', $donnees['num_tel']);
@@ -93,22 +104,24 @@ function createFleuriste() {
     $prepared->bindParam(':avis', $donnees['avis']);
     $prepared->bindParam(':prix', $donnees['prix']);
     $prepared->bindParam(':service', $donnees['service']);
+  
+      $resultat = $prepared->execute();
+  
+      if($resultat !== false) {
+          http_response_code(201); 
+          $msg = array("message"=> "Fleuriste créé avec succès"); 
+          echo json_encode($msg);
+      } else {
+          http_response_code(400); 
+          $msg = array("erreur"=> "Erreur lors de la création du fleuriste 1 "); 
+          echo json_encode($msg);
+          
+      }
+  }
 
-    $resultat = $prepared->execute();
-
-    if($resultat !== false) {
-        http_response_code(201); 
-        $msg = array("message"=> "Fleuriste créé avec succès"); 
-        echo json_encode($msg);
-    } else {
-        http_response_code(400); 
-        $msg = array("erreur"=> "Erreur lors de la création du fleuriste"); 
-        echo json_encode($msg);
-    }
-}
 
 
-function updateFleuriste() {
+  function updateFleuriste() {
     require_once("connexion.php"); 
 
     // Récupérer les données du corps de la requête PUT
@@ -119,42 +132,42 @@ function updateFleuriste() {
 
         // Initialiser un tableau pour stocker les champs à mettre à jour
         $champs_a_mettre_a_jour = array();
-        $valeurs_a_mettre_a_jour = array();
 
-        // Vérifier et ajouter les champs à mettre à jour dans le tableau
+        // Vérifier si le nom est présent dans les données
         if(isset($donnees['nom'])) {
-            $champs_a_mettre_a_jour[] = "nom=:nom";
-            $valeurs_a_mettre_a_jour[':nom'] = $donnees['nom'];
+            $nom = $donnees['nom'];
+            $champs_a_mettre_a_jour[] = "nom='$nom'";
         }
 
+        // Vérifier si le mail est présent dans les données
         if(isset($donnees['mail'])) {
-            $champs_a_mettre_a_jour[] = "mail=:mail";
-            $valeurs_a_mettre_a_jour[':mail'] = $donnees['mail'];
+            $mail = $donnees['mail'];
+            $champs_a_mettre_a_jour[] = "mail='$mail'";
         }
 
         if(isset($donnees['num_tel'])) {
-            $champs_a_mettre_a_jour[] = "num_tel=:num_tel";
-            $valeurs_a_mettre_a_jour[':num_tel'] = $donnees['num_tel'];
+            $num_tel = $donnees['num_tel'];
+            $champs_a_mettre_a_jour[] = "num_tel='$num_tel'";
         }
 
         if(isset($donnees['localisation'])) {
-            $champs_a_mettre_a_jour[] = "localisation=:localisation";
-            $valeurs_a_mettre_a_jour[':localisation'] = $donnees['localisation'];
+            $localisation = $donnees['localisation'];
+            $champs_a_mettre_a_jour[] = "localisation='$localisation'";
         }
 
         if(isset($donnees['prix'])) {
-            $champs_a_mettre_a_jour[] = "prix=:prix";
-            $valeurs_a_mettre_a_jour[':prix'] = $donnees['prix'];
+            $prix = $donnees['prix'];
+            $champs_a_mettre_a_jour[] = "prix='$prix'";
         }
 
         if(isset($donnees['avis'])) {
-            $champs_a_mettre_a_jour[] = "avis=:avis";
-            $valeurs_a_mettre_a_jour[':avis'] = $donnees['avis'];
+            $avis = $donnees['avis'];
+            $champs_a_mettre_a_jour[] = "avis='$avis'";
         }
 
         if(isset($donnees['service'])) {
-            $champs_a_mettre_a_jour[] = "service=:service";
-            $valeurs_a_mettre_a_jour[':service'] = $donnees['service'];
+            $service = $donnees['service'];
+            $champs_a_mettre_a_jour[] = "service='$service'";
         }
 
         // Construire la partie SET de la requête SQL en fonction des champs à mettre à jour
@@ -162,17 +175,10 @@ function updateFleuriste() {
 
         if(!empty($champs_a_mettre_a_jour_sql)) {
             // Écrire le code pour mettre à jour les champs spécifiés du fleuriste dans la base de données
-            $requete = "UPDATE fleuriste SET $champs_a_mettre_a_jour_sql WHERE id_fleuriste=:id";
-            $prepared_update = $connexion->prepare($requete);
+            $requete = "UPDATE fleuriste SET $champs_a_mettre_a_jour_sql WHERE id_fleuriste=$id";
+            $resultat = $connexion->exec($requete);
 
-            // Liaison des paramètres
-            foreach ($valeurs_a_mettre_a_jour as $nom_parametre => $valeur_parametre) {
-                $prepared_update->bindParam($nom_parametre, $valeur_parametre);
-            }
-            $prepared_update->bindParam(":id", $id);
-
-            // Exécution de la requête préparée
-            if($prepared_update->execute()) {
+            if($resultat !== false) {
                 http_response_code(200); 
                 $msg = array("message"=> "Fleuriste mis a jour avec succes"); 
                 echo json_encode($msg);
@@ -183,13 +189,13 @@ function updateFleuriste() {
             }
         } else {
             // Si aucun champ à mettre à jour n'a été spécifié
-            http_response_code(204); 
+            http_response_code(400); 
             $msg = array("erreur"=> "Aucun champ à mettre a jour specifie"); 
             echo json_encode($msg);
         }
     } else {
         // Si l'ID est manquant dans les données
-        http_response_code(204); 
+        http_response_code(400); 
         $msg = array("erreur"=> "ID manquant pour la mise a jour du fleuriste"); 
         echo json_encode($msg);
     }
@@ -201,22 +207,21 @@ function deleteFleuriste() {
 
     //$donnees = json_decode(file_get_contents('php://input'), true);
     parse_str($_SERVER['QUERY_STRING'], $params);
-    $id = $params['id_fleuriste']; // Pas besoin de json_encode ici
-
+    $id = $params['id_fleuriste'];
     // Écrire le code pour supprimer un fleuriste existant de la base de données
     // Utilisez l'ID récupéré pour cela
     $requete = "DELETE FROM fleuriste WHERE id_fleuriste = $id";
     $resultat = $connexion->exec($requete);
 
     if($resultat !== false) {
-        http_response_code(200); // Utilisez 200 pour indiquer le succès
-        $msg = array("message"=> "Fleuriste supprimé avec succès"); 
+        http_response_code(200); 
+        $msg = array("message"=> "Fleuriste supprime avec succes"); 
         echo json_encode($msg);
     } else {
-        http_response_code(500); // Utilisez 500 pour les erreurs de serveur
+        http_response_code(500); 
         $msg = array("erreur"=> "Erreur lors de la suppression du fleuriste"); 
         echo json_encode($msg);
     }
 }
-
 ?>
+

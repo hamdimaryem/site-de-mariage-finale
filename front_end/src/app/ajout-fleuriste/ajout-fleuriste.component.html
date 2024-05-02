@@ -1,41 +1,210 @@
-<form (ngSubmit)="createFleuriste()">
-    <label for="id_fleuriste">ID:</label>
-    <input type="text" placeholder="Saisie ID" [(ngModel)]="fleurists.id_fleuriste" id="id_fleuriste" name="id_fleuriste" required>
+<style>
+       /* Styles du premier formulaire */
+       .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    min-height: 100vh; /* Remplit 100% de la hauteur de l'écran */
+    width: 100%; /* Pour occuper toute la largeur de l'écran */
+}
+
+
   
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" placeholder="Nom" [(ngModel)]="fleurists.nom" name="nom" required>
+.form_area {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
   
-    <label for="lieu">Localisation:</label>
-    <select id="lieu" [(ngModel)]="fleurists.localisation" name="localisation" required>
-      <option value="" disabled selected>Choisir le gouvernorat</option>
-      <option value="Ariana">Ariana</option>
-      <option value="Tunis">Tunis</option>
-      <option value="Ben arous">Ben arous</option>
-      <option value="Sfax">Sfax</option>
-      <option value="Nabeul">Nabeul</option>
-      <option value="Sousse">Sousse</option>
-      <option value="Monastir">Monastir</option>
-    </select>
+   background-size: cover; /* Ajuste l'image de fond pour couvrir */
+   background-position: center;
+   border: 2px solid #264143;
+   border-radius: 20px;
+   box-shadow: 3px 4px 0px 1px #E99F4C;
+   position: relative;
+   padding: 20px; /* Ajout d'espace autour du contenu */
+   min-width: 100%; /* Assure que le conteneur occupe la largeur complète */
+}
+
+
   
-    <label for="avis">Avis:</label>
-    <input type="number" id="avis" placeholder="Avis" [(ngModel)]="fleurists.avis" name="avis" min="0" max="5" step="0.1" required>
+    .title {
+        color: #264143;
+        font-weight: 900;
+        font-size: 1.5em;
+        margin-top: 20px;
+    }
   
-    <label for="prix">Prix Moyen:</label>
-    <input type="number" id="prix" placeholder="Prix Moyen" [(ngModel)]="fleurists.prix" name="prix" required>
+    .sub_title {
+        font-weight: 600;
+        margin: 5px 0;
+    }
   
-    <label for="mail">Email:</label>
-    <input type="email" id="mail" placeholder="Email" [(ngModel)]="fleurists.mail" name="mail">
+    .form_group {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Diviser en deux colonnes égales */
+        grid-column-gap: 20px; /* Espacement entre les colonnes */
+        margin: 10px;
+    }
   
-    <label for="num_tel">Numéro de Téléphone:</label>
-    <input type="tel" id="num_tel" placeholder="Numéro de Téléphone" [(ngModel)]="fleurists.num_tel" name="num_tel" pattern="[0-9]{8}" maxlength="8" required>
+    .form_style {
+        outline: none;
+        border: 2px solid #264143;
+        box-shadow: 3px 4px 0px 1px #E99F4C;
+        width: 290px;
+        padding: 12px 10px;
+        border-radius: 4px;
+        font-size: 15px;
+    }
   
-    <label for="service">Service:</label>
-    <select id="service" [(ngModel)]="fleurists.service" name="service" required>
-      <option value="" disabled selected>Choisir le service </option>
-      <option value="decoration">decoration</option>
-      <option value="fleur">fleur pour marièe</option>
-    </select>
+    .form_style:focus, button:focus {
+        transform: translateY(4px);
+        box-shadow: 1px 2px 0px 0px #E99F4C;
+    }
+  
+    button {
+        padding: 15px;
+        margin: 25px 0px;
+        width: 290px;
+        font-size: 15px;
+        background: #a1cca6;
+        border-radius: 10px;
+        font-weight: 800;
+        box-shadow: 3px 3px 0px 0px #E99F4C;
+    }
+  
+    button:hover {
+        opacity: .9;
+    }
+  
+    .link {
+        font-weight: 800;
+        color: #264143;
+        padding: 5px;
+    }
+  
+    /* Styles de l'image */
+    .form_image {
+        position: absolute; /* Position absolue pour positionner l'image */
+        /* Décalage à gauche */
+        left: 20px;
+        top: 20px; /* Décalage en haut */
+        width: 150px; /* Largeur de l'image */
+        height: 150px; /* Hauteur de l'image */
+        border-radius: 50%; /* Forme circulaire */
+    }
+  
+    .form_image_right {
+        position: absolute;
+        right: 30px; /* Décalage à droite */
+        bottom: 20px; /* Décalage vers le bas */
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+  
+    /* Styles du tableau */
+    table {
+        border-collapse: collapse;
+        width: 90%;
+        margin-top: 20px;
+    }
+  
+    th, td {
+        border: 1px solid #264143;
+        padding: 8px;
+        text-align: center;
+    }
+  
+    th {
+        background-color: #EDDCD9;
+        color: #264143;
+    }
+  
+    td {
+        background-color: #ffffff;
+    }
+    .h1 {
+    font-family: 'Lora', serif; /* Police élégante */
+    text-transform: uppercase; /* Majuscules */
+    letter-spacing: 1.5px; /* Espacement entre les lettres */
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    color: #2c3e50; /* Couleur sombre */
+}
+.h3 {
+    font-family: 'Roboto', sans-serif; /* Police moderne */
+    font-weight: 400; /* Police normale */
+    letter-spacing: 1px; /* Espacement entre les lettres */
+    color: #95a5a6; /* Gris clair pour contraste */
+    text-transform: uppercase; /* Majuscules */
     
-    <button type="submit">Confirmer</button>
-    <button type="reset" (click)="request()">Annuler</button>
-  </form>
+}
+.form_image {
+    position: absolute; /* Position absolue pour positionner l'image */
+    left: 20%; /* Ajustez la position horizontale selon vos besoins */
+    top: 1%; /* Ajustez la position verticale selon vos besoins */
+    width: 20%; /* Largeur de l'image en pourcentage */
+    height: auto; /* Hauteur automatique pour maintenir le rapport hauteur-largeur */
+    max-width: 200px; /* Largeur maximale de l'image */
+    border-radius: 50%; /* Forme circulaire */
+}
+    </style>
+
+<body>
+    <div class=" container container-fluid">
+        
+        <h1 class="title">Formulaire Ajout Fleuriste</h1>
+        <div class="form_area">
+            <form (ngSubmit)="createFleuriste()">
+                
+                <div>
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" placeholder="Nom" [(ngModel)]="fleurists.nom" name="nom" required>
+            </div>
+        <div>
+
+                <label for="lieu">Localisation:</label>
+                <select id="lieu" [(ngModel)]="fleurists.localisation" name="localisation" required>
+                    <option value="" disabled selected>Choisir le gouvernorat</option>
+                    <option value="Ariana">Ariana</option>
+                    <option value="Tunis">Tunis</option>
+                    <option value="Ben arous">Ben arous</option>
+                    <option value="Sfax">Sfax</option>
+                    <option value="Nabeul">Nabeul</option>
+                    <option value="Sousse">Sousse</option>
+                    <option value="Monastir">Monastir</option>
+                </select>
+            </div>
+        <div>
+
+                <label for="avis">AVIS:</label>
+                <input type="number" id="avis" placeholder="donner l'avis" [(ngModel)]="fleurists.avis" name="avis" min="0" max="5" step="0.1" required>
+        </div>
+    <div>
+                <label for="prix">prix moyen:</label>
+                <input type="number" id="prix" placeholder="Prix Moyen en dinars " [(ngModel)]="fleurists.prix" name="prix" required>
+            </div>
+        <div>
+            <label for="mail">MAIL:</label>
+                <input type="email" id="mail" placeholder="aderesse mail" [(ngModel)]="fleurists.mail" name="mail">
+            </div>
+        <div>
+                <label for="num_tel">Numéro de Téléphone:</label>
+                <input type="tel" id="num_tel" placeholder="Numéro de Téléphone" [(ngModel)]="fleurists.num_tel" name="num_tel" pattern="[0-9]{8}" maxlength="8" required>
+            </div>
+        <div>
+                <select id="service" [(ngModel)]="fleurists.service" name="service" required>
+                    <option value="" disabled selected>Choisir le service</option>
+                    <option value="decoration">décoration</option>
+                    <option value="fleur">fleur pour mariée</option>
+                </select>
+            </div>
+                <button type="submit">Confirmer</button>
+                <button type="reset" (click)="request()">Annuler</button>
+            </form>
+        </div>
+    </div>
+</body>
+

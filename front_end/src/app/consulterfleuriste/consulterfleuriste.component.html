@@ -1,0 +1,92 @@
+<style>
+  .container {
+    width: 100%; /* Occuper 100% de la largeur */
+      min-height: 100vh; /* Occuper 100% de la hauteur de l'écran */
+      display: flex;
+      justify-content: center; /* Centrer horizontalement */
+      align-items: center; /* Centrer verticalement */
+      flex-direction: column; /* Organiser les éléments en colonne */
+      background-image: url('https://media.istockphoto.com/id/1330963152/fr/vectoriel/abstrait-rose-blush-fond-aquarelle-liquide-avec-des-lignes-dor%C3%A9es-des-points-et-des.jpg?s=612x612&w=0&k=20&c=YcwkRhUQakEi_UNuylM7JWHdVTMt60ePHHaotuZAnQk=');
+      background-size: cover; /* Couvrir avec l'image de fond */
+      background-position: center; /* Centrer l'image de fond */
+      padding: 20px; 
+    }
+    .h3 {
+  font-family: 'Roboto', sans-serif; /* Police moderne */
+  font-weight: 400; /* Police normale */
+  letter-spacing: 1px; /* Espacement entre les lettres */
+  color: #230216; /* Gris clair pour contraste */
+  text-transform: uppercase; /* Majuscules */
+  
+  }
+    
+  
+  .card {
+    background-color: #edcfcf; /* Couleur de fond des cartes */
+    border: 1px solid #ddd; /* Bordure légère */
+    border-radius: 10px; /* Bordure carrée avec des coins légèrement arrondis */
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    width: 50vw; /* Utiliser des unités relatives pour une largeur fixe */
+    height: 50vw; /* Assurer que la hauteur est égale à la largeur */
+    padding: 20px; /* Espacement interne */
+    margin: 15px auto; /* Centrer les cartes avec espace autour */
+    display: flex; /* Pour disposition interne */
+    flex-direction: column; /* Organiser le contenu verticalement */
+  }
+  
+  
+  
+  
+  .fleuristes-list {
+    display: flex;
+    flex-wrap: wrap; /* Pour s'assurer que les éléments s'ajustent */
+    gap: 30px; /* Espacement entre les éléments */
+  }
+  .title-encadre {
+    text-align: center; /* Centrer le texte */
+    border: 2px solid #333; /* Bordure épaisse pour l'encadrement */
+    padding: 10px; /* Espacement interne pour que le texte ne soit pas serré */
+    margin: 20px; /* Espacement externe pour une séparation visuelle */
+    border-radius: 10px; /* Bordures arrondies pour un aspect doux */
+    background-color: #e3c8c8; /* Fond clair pour un contraste doux */
+  }
+  .image-container {
+    text-align: center; /* Centrer l'image dans son conteneur */
+    padding: 10px; /* Espacement interne */
+  }
+  
+  .circular-image {
+    width: 10vw; /* 20% de la largeur de l'écran */
+    height: 10vw; /* Hauteur égale à la largeur pour garder la forme circulaire */
+    border-radius: 50%; /* Rendre l'image circulaire */
+    object-fit: cover; /* Ajuste l'image pour remplir sans distorsion */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); /* Ombre subtile pour l'effet visuel */
+  }
+  
+  
+  </style>
+  <div class="container">
+    <h5 class="title-encadre">"Nous avons rassemblé une sélection de fleuristes recommandés pour vous, adaptée à votre ville et votre budget. Vous y trouverez des options pour tous les goûts et tous les besoins. Nous espérons que notre liste vous aidera à trouver exactement ce que vous cherchez."</h5>
+    <div class="row fleuristes-list">
+      <div class="col-lg-4 col-md-6 mb-4 fleuristes-list" *ngFor="let fleuriste of fleuristes">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h3">{{ fleuriste.nom }}</h3>
+            <div class="image-container">
+            <img class="circular-image" src="https://www.evenementielpourtous.com//upload/76813_1_big_123497.jpg">
+          </div>
+            <p class="card-text fleuriste-location">{{ fleuriste.localisation }}</p>
+            <p class="card-text fleuriste-service"><strong>Service:</strong> {{ fleuriste.service }}</p>
+            <p class="card-text fleuriste-price"><strong>Prix:</strong> {{ fleuriste.prix }}</p>
+            <p class="card-text fleuriste-avis"><strong>Avis:</strong> {{ fleuriste.avis }}</p>
+            <p class="card-text fleuriste-mail"><strong>Email:</strong> {{ fleuriste.mail }}</p>
+            <p class="card-text fleuriste-num_tel"><strong>Numéro de téléphone:</strong> {{ fleuriste.num_tel }}</p>
+
+          </div>
+          <div class="card-footer fleuriste-buttons">
+            <button (click)="confirmerFleuriste(fleuriste.id_fleuriste)">Confirmer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

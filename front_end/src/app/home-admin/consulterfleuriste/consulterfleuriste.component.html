@@ -1,0 +1,22 @@
+<div class="container">
+  <h1 class="page-title mb-4">Nos Fleuristes</h1>
+  <div class="row fleuristes-list">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let fleuriste of fleuristes">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title fleuriste-name">{{ fleuriste.nom }}</h2>
+          <p class="card-text fleuriste-location">{{ fleuriste.localisation }}</p>
+          <p class="card-text fleuriste-service"><strong>Service:</strong> {{ fleuriste.service }}</p>
+          <p class="card-text fleuriste-price"><strong>Prix:</strong> {{ fleuriste.prix }}</p>
+          <p class="card-text fleuriste-avis"><strong>Avis:</strong> {{ fleuriste.avis }}</p>
+          <p class="card-text fleuriste-mail"><strong>Email:</strong> {{ fleuriste.mail }}</p>
+          <p class="card-text fleuriste-num_tel"><strong>Numéro de téléphone:</strong> {{ fleuriste.num_tel }}</p>
+        </div>
+        <div class="card-footer fleuriste-buttons">
+          <button (click)="confirmerFleuriste(fleuriste.id_fleuriste)">Confirmer</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

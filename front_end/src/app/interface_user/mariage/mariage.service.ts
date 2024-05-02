@@ -1,21 +1,40 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MariageService {
-  url: string = "http://localhost/api/mariage.php";
+ public baseUrl = 'http://localhost/api/get_mariage_details.php'; // URL de l'API pour obtenir les détails du mariage
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
+  getmariage() {
+    // Vérifier si localStorage est disponible
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        // Créer les en-têtes avec le token
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-  getmaraige(id: any) {
-    return this.http.get("'${this.url}?id_user=${id}'");
+        // Créer les options de requête avec les en-têtes
+        const options = { headers };
+
+        // Effectuer la requête HTTP avec les options
+        return this.http.get(this.baseUrl, options);
+      } else {
+        // Si aucun token n'est disponible, afficher une alerte ou gérer l'erreur
+        console.error("Token non trouvé dans localStorage");
+        // Retourner une valeur par défaut ou gérer l'erreur d'une autre manière
+        // Dans ce cas, nous retournons null, mais vous pouvez choisir une autre approche
+        return null;
+      }
+    } else {
+      // Si localStorage n'est pas disponible, afficher une alerte ou gérer l'erreur
+      console.error("localStorage n'est pas disponible");
+      // Retourner une valeur par défaut ou gérer l'erreur d'une autre manière
+      // Dans ce cas, nous retournons null, mais vous pouvez choisir une autre approche
+      return null;
+    }
   }
-
-
-}
-
-
-
+}  
